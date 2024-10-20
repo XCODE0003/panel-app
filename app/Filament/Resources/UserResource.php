@@ -45,8 +45,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('login')->label('Логин'),
-                TextColumn::make('telegram_username')->label('Телеграм'),
+                TextColumn::make('login')->label('Логин')->searchable(),
+                TextColumn::make('telegram_username')->label('Телеграм')->searchable(),
                 TextColumn::make('is_admin')->label('Админ'),
                 TextColumn::make('is_banned')->label('В бане'),
                 TextColumn::make('created_at')->label('Зарегистрирован'),
@@ -57,8 +57,11 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('profile')->label('Профиль')->icon('heroicon-o-user')->action(fn($record) => redirect('/user/profile/' . $record->id)),
+                    Tables\Actions\EditAction::make('edit'),
+                    Tables\Actions\DeleteAction::make('delete'),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

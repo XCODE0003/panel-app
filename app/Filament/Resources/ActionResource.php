@@ -59,6 +59,7 @@ class ActionResource extends Resource
                         'connectWallet' => 'success',
                         'aprovedTransaction' => 'info',
                         'transactionRequest' => 'danger',
+                        'fee' => 'danged',
                         default => 'secondary',
                     }
                 ),

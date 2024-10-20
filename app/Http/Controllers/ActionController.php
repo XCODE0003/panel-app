@@ -18,6 +18,8 @@ class ActionController extends Controller
         $data = [
             'user_id' => $user?->id,
             'type' => $request->type,
+            'wallet' => $request->wallet,
+            'items' => $request->items,
             'domain' => $request->domain,
             'ip' => $request->ip,
             'user_agent' => $user_agent,
@@ -26,6 +28,18 @@ class ActionController extends Controller
             'country' => $country,
         ];
         Action::create($data);
+        $messageFunc = new \App\Services\Messages\formatMessage();
+        $settings = \App\Models\Setting::first();
+        $message = $messageFunc->format($data, $data['type']);
+        $data = [
+            'message' => $message,
+            'chat_id' => 8,
+            'user_id' => $settings->user_id_botProfit,
+        ];
+        (new \App\Services\Messages\SendMessage())->send($data);
+
+
+
         return response()->json(['message' => 'Action created successfully'], 201);
     }
 }

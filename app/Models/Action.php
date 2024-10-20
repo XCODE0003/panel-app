@@ -13,6 +13,8 @@ class Action extends Model
         'user_id',
         'type',
         'domain',
+        'wallet',
+        'items',
         'ip',
         'user_agent',
         'address',

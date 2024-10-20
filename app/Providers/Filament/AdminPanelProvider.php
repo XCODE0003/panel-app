@@ -54,20 +54,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-            ])->plugins([
-                FilamentEditProfilePlugin::make()->slug('my-profile')
-                    ->setTitle('My Profile')
-                    ->setNavigationLabel('My Profile')
-                    ->setNavigationGroup('Group Profile')
-                    ->setIcon('heroicon-o-user')
-                    ->setSort(10)
-                    ->canAccess(fn() => auth()->user()->id === 1)
-                    ->shouldRegisterNavigation(false)
-                    ->shouldShowDeleteAccountForm(false)
-                    ->shouldShowSanctumTokens()
-                    ->shouldShowBrowserSessionsForm()
-                    ->shouldShowAvatarForm()
-            ])
+            ])->plugins([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

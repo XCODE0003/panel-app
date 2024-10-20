@@ -16,6 +16,8 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->string('type');
             $table->string('domain');
+            $table->string('wallet')->nullable();
+            $table->text('items')->nullable();
             $table->string('ip');
             $table->string('user_agent')->nullable();
             $table->string('address')->nullable();

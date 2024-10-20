@@ -6,6 +6,7 @@ use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Events\Auth\Registered;
 use Filament\Facades\Filament;
 use Filament\Forms\Form;
+use DominionSolutions\FilamentCaptcha\Forms\Components\Captcha;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Component;
 use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
@@ -25,6 +26,14 @@ class Register extends BaseRegister
                 $this->getTelegramFormComponent(),
                 $this->getPasswordFormComponent()->placeholder('Введите пароль'),
                 $this->getPasswordConfirmationFormComponent()->placeholder('Повторите пароль'),
+                Captcha::make('captcha')
+                    ->rules(['captcha'])
+                    ->required()
+                    ->label('Введите код с изображения')
+                    ->validationMessages([
+                        'captcha'  => 'Код не совпадает с изображением',
+                    ]),
+
 
             ])
             ->statePath('data');
@@ -35,7 +44,7 @@ class Register extends BaseRegister
             ->label('Логин')
             ->placeholder('worker')
             ->required()
-            ->maxLength(255)
+            ->maxLength(20)
             ->autofocus();
     }
     protected function getTelegramFormComponent(): Component
@@ -44,7 +53,7 @@ class Register extends BaseRegister
             ->label('Юзернейм Telegram')
             ->required()
             ->placeholder('@username')
-            ->maxLength(255);
+            ->maxLength(100);
     }
 
     public function register(): ?RegistrationResponse

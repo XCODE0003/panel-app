@@ -41,7 +41,8 @@ class WithdrawResource extends Resource
             ->schema([
                 Select::make('user_id')
                     ->label('Пользователь')
-                    ->options(User::all()->pluck('login', 'id')),
+                    ->options(User::all()->pluck('login', 'id'))
+                    ->searchable(),
                 TextInput::make('amount')
                     ->label('Сумма'),
             ])->columns(1);
